@@ -7,10 +7,11 @@ const puppeteer = require('puppeteer');
         userDataDir: "./tmp"
     });
 	const page = await browser.newPage();
-	await page.goto('https://www.freecodecamp.org/');
+	await page.goto('http://ica.themorgan.org/manuscript/thumbs/77146');
 
+    /*
     // get el by className
-    const elements = await page.$$('className');
+    const elements = await page.$$('col-xs-12 col-sm-2');
     // loop thru all handles
     for(const element of elements){
         // do something
@@ -21,6 +22,7 @@ const puppeteer = require('puppeteer');
 
         }
     }   
+    */
     
 	
 	await browser.close();

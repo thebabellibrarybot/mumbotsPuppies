@@ -19,7 +19,7 @@ const puppeteer = require('puppeteer');
             const singleEl = await page.evaluate(el => el.innterText, element)
             console.log(singleEl)
         } catch (err) {
-
+nonod
         }
     }   
     */

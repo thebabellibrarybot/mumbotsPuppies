@@ -15,11 +15,13 @@ const data = {
     "MS B.19 fol. 53r": "http://ica.themorgan.org/manuscript/page/10/77146",
     "MS B.19 fol. 58r": "http://ica.themorgan.org/manuscript/page/11/77146",
     "MS B.19 fol. 73v": "http://ica.themorgan.org/manuscript/page/12/77146"
-  }
+  };
+const className = '.col-sm-7.col-sm-push-3 img';
+const classNameP = '.col-sm-7.col-sm-push-3 p';
 
 
 
-async function findImgurl (url) {
+async function findImgurl (url, className, classNameP) {
 
     try {
 
@@ -39,9 +41,36 @@ async function findImgurl (url) {
           
             await cluster.task(async ({ page, data: url }) => {
               await page.goto(url);
-              const screen = await page.screenshot();
-              // Store screenshot, do something else
+
+              console.log(url);
+              
+              // do find img urls
+              const imgElements = await page.$$(className);
+
+              const srcProperty = await imgElements[0].getProperty('src');
+              const srcValue = await srcProperty.jsonValue();
+              console.log(srcValue, 'src');
+
+              const textElements = await page.$$(classNameP);
+
+              const text = await textElements[0].evaluate(el => el.textContent, textElements[0]);
+              console.log(text, 'text');
+
+              
+              
+
+              // do find img text
+              //const imgTexts = await page.$$(classNameP);
+
+              //const text = await aElement.evaluate(el => el.textContent, imgTexts[0]);
+              //console.log(text, 'text');
+            
+
             });
+
+            for (const url of urls) {
+              await cluster.queue(url);
+            }
           
             await cluster.idle();
             await cluster.close();
@@ -53,6 +82,6 @@ async function findImgurl (url) {
         }
 
 };
-findImgurl(data);
+findImgurl(data, className, classNameP);
 
 module.exports = findImgurl;

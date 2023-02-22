@@ -4,6 +4,7 @@ const { ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const searchMorganRoute = require('./src/controllers/pup2');
 
 // basic vars 
 const mongoose = require('mongoose');
@@ -11,8 +12,6 @@ const app = express();
 const Port = process.env.PORT || 5000
 console.log(Port, 'port')
 
-// fetch cookies credentials requirement
-app.use(credentials);
 // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
 // expres w/o custom hook
@@ -35,7 +34,7 @@ connection.once('open', () => {
 
 
 // routes
-
+app.use('/searchmorgan', searchMorganRoute);
 /*
 // serve static assests if in production
     // set static folder

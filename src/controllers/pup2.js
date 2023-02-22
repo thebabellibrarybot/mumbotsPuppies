@@ -1,6 +1,5 @@
 const fetchTitleHref = require('../utils/findTitleHres');
-const { Cluster } = require('puppeteer-cluster');
-
+const findImgurl = require('../utils/findImgurl');
 
 // get dict with {titles: href links}
 const getTitleHref = async (req, res) => {
@@ -15,53 +14,23 @@ const getTitleHref = async (req, res) => {
   async function run(url, className, elType) {
     const data = await fetchTitleHref(url, className, elType);
     console.log(data, 'data');
+    // mk returnData obj like:
+    /*
+    const returnData = {
+      num_images: data.length,
+      images: data
+    }
+    */
     res.status(200).json(data);
   };
   run(url, className, elType); 
-
 };
-
-
-// takes url param
-// returns dict with {titles: href links}
-/*
-async function fetchTitleHref(url, className, elType) {
-    try {
- 
-        const myObj = {};
-        const browser = await puppeteer.launch({
-            headless: false,
-            defaultViewport: false,
-            userDataDir: "./tmp"
-        });
-        const page = await browser.newPage();
-    
-        await page.goto(url);
-    
-        // get el by className and a.ref
-        const aElements = await page.$$(className);
-    
-        for (const aElement of aElements) {
-    
-            // get text from original page
-            const text = await aElement.evaluate(el => el.textContent, aElement);
-            // get src from original page
-            const href = await aElement.getProperty(elType);
-
-            myObj[text] = href.jsonValue();
-        }
-        await browser.close();
-
-        return myObj;
-  } catch (err) {
-    return err
-  }
-};
-*/
 
 // takes dic with fetchTitleHref dict
 // returns dict with {titles: fullsizeImgUrl}
-async function fetchHrefLargeImage(dict) {
+async function getImgurl(dict) {
+
+  console.log('fetchHrefLargeImage fired')
 
 };
 
@@ -70,4 +39,4 @@ async function fetchHrefLargeImage(dict) {
 // returns array with urls
 
 
-module.exports = getTitleHref, fetchHrefLargeImage;
+module.exports = getTitleHref, getImgurl;

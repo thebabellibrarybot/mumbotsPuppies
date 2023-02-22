@@ -2,11 +2,10 @@ const puppeteer = require('puppeteer');
 
 async function fetchTitleHref(url, className, elType) {
     try {
- 
         const myObj = {};
         const browser = await puppeteer.launch({
-            headless: false,
-            defaultViewport: false,
+            //headless: false,
+            //defaultViewport: false,
             userDataDir: "./tmp"
         });
         const page = await browser.newPage();
@@ -23,9 +22,9 @@ async function fetchTitleHref(url, className, elType) {
             console.log(text, 'text');
             // get src from original page
             const href = await aElement.getProperty(elType);
-            console.log(href, 'href');
+            console.log(href.jsonValue(), 'href');
 
-            myObj[text] = href.jsonValue();
+            myObj[text] = await href.jsonValue();
         }
         await browser.close();
 

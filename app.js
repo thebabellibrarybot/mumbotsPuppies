@@ -4,7 +4,7 @@ const { ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const searchMorganRoute = require('./src/controllers/pup2');
+const searchMorganRoute = require('./src/routes/pracRoute');
 
 // basic vars 
 const mongoose = require('mongoose');
@@ -35,15 +35,7 @@ connection.once('open', () => {
 
 // routes
 app.use('/searchmorgan', searchMorganRoute);
-/*
-// serve static assests if in production
-    // set static folder
-    app.use(express.static('client/build')) 
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-*/
 
 // port and clear run statements;
 app.listen(Port, () => {

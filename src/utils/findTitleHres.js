@@ -19,10 +19,11 @@ async function fetchTitleHref(url, className, elType) {
     
             // get text from original page
             const text = await aElement.evaluate(el => el.textContent, aElement);
-            console.log(text, 'text');
+//            console.log(text, 'text');
+
             // get src from original page
             const href = await aElement.getProperty(elType);
-            console.log(href.jsonValue(), 'href');
+//            console.log(href.jsonValue(), 'href');
 
             myObj[text] = await href.jsonValue();
         }

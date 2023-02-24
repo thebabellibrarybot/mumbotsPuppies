@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 
 // mongoDB conn
-const uri = process.env.MONGO_URI 
+const uri = process.env.MONGO_URI  
 mongoose.set('strictQuery', false);
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const connection = mongoose.connection;

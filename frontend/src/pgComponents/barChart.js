@@ -4,7 +4,7 @@ import { getNumTombsByValue } from '../api/commonAPI';
 const BarChart = () => {
 
     // state
-    const [data, setData] = useState('no data');
+    const [data, setData] = useState(null);
 
 
     // get data on props-clicked
@@ -19,6 +19,9 @@ const BarChart = () => {
             <div>
                 <button label = 'date' onClick={() => onClickProps('date')}>show date</button>
                 <button label = 'type' onClick={() => onClickProps('type')}>show type</button>
+            </div>
+            <div className={data ? data : 'invisible'}>
+                <p>hidden div</p>
             </div>
         </div>
     );

@@ -1,0 +1,9 @@
+.invisible {
+    display: none;
+}
+.date {
+    background-color: blue;
+}
+.type {
+    background-color: red;
+}

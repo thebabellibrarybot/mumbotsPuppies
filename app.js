@@ -1,12 +1,13 @@
 const express = require('express');
-const cors = require('cors')
 const { ServerApiVersion } = require('mongodb');
 require('dotenv').config();
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const searchMorganRoute = require('./src/routes/pracRoute');
 
-// basic vars 
+// required routes
+const searchMorganRoute = require('./src/routes/pracRoute');
+const searchTombsRoute = require('./src/routes/searchTombsRoute');
+const updateSearchRoute = require('./src/routes/updateSearchRoute');
+
+// setup-template
 const mongoose = require('mongoose');
 const app = express();
 const Port = process.env.PORT || 5000
@@ -21,8 +22,8 @@ app.use((req, res, next) => {
     console.log(req.path, req.method, req.body, 'server msg from port')
     next()
 });
-// midleware for cookies
-app.use(cookieParser());
+
+
 // mongoDB conn
 const uri = process.env.MONGO_URI 
 mongoose.set('strictQuery', false);
@@ -35,6 +36,12 @@ connection.once('open', () => {
 
 // routes
 app.use('/searchmorgan', searchMorganRoute);
+
+// update routes
+app.use('/updatesearch', updateSearchRoute);
+
+// active routes
+app.use('/search', searchTombsRoute);
 
 
 // port and clear run statements;

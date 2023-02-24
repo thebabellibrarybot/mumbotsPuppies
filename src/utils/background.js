@@ -3,10 +3,21 @@ const stringMap = require('../middleware/stringmap');
 const { countEachValue } = require('../utils/mathutils');
 const TombStatsModel = require('../models/backgroundModel');
 const getUniqueValues = require('../utils/mathutils').getUniqueValues;
+const mongoose = require('mongoose');
+const { ServerApiVersion } = require('mongodb');
 
 // params or state
 const baseurl = 'https://www.themorgan.org/manuscripts/list';
 const yearArray = Object.values(stringMap);
+
+// mongoDB conn
+const uri = 'mongodb+srv://babeluser:babelpassword@babelcluster.fogf4.mongodb.net/testII?retryWrites=true&w=majority' 
+mongoose.set('strictQuery', false);
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const connection = mongoose.connection;
+connection.once('open', () => {
+    console.log('md conn')
+})
 
 async function runbackground(){
     try { 
@@ -38,7 +49,7 @@ async function runbackground(){
             // add to mongoDB
             const resObj = await new TombStatsModel ({
                 "year": year,
-                "numTombs": Object.keys(allTombsDict).length,
+                "numtombs": Object.keys(allTombsDict).length,
                 "locationArray": uniqueLocations,
                 "numTombsPerLocation": numTombsPerLocation,
                 "typeArray": uniqueTypes,
@@ -47,7 +58,7 @@ async function runbackground(){
 
             resObj.save()
             .then(() => {
-            console.log('Document saved');
+            console.log(resObj, 'Document saved');
             })
             .catch((err) => {
             console.error('Error saving document:', err);
@@ -57,4 +68,4 @@ async function runbackground(){
         console.log(err);
     };
 }
-const i = runbackground().then(result => console.log(result, 'resII')).catch(error => console.error(error));
+//const i = runbackground().then(result => console.log(result, 'resII')).catch(error => console.error(error));

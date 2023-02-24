@@ -1,3 +1,7 @@
+
+
+// CAN DELETE THIS WHOLE ASS FILE NOW
+
 const puppeteer = require('puppeteer');
 
 async function fetchTitleHref(url, className, elType) {

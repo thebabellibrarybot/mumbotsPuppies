@@ -1,3 +1,7 @@
+
+
+// CAN DELET THIS WHOLE ASS FILE NOW
+
 const { Cluster } = require('puppeteer-cluster');
 
 // takes array of urls and preforms pupetter action on each

@@ -1,6 +1,7 @@
 const { findUrlCharts } = require('./findTombsByDate');
 const stringMap = require('../middleware/stringmap');
 const { countEachValue } = require('../utils/mathutils');
+const TombStatsModel = require('../models/backgroundModel');
 const getUniqueValues = require('../utils/mathutils').getUniqueValues;
 
 // params or state
@@ -8,15 +9,15 @@ const baseurl = 'https://www.themorgan.org/manuscripts/list';
 const yearArray = Object.values(stringMap);
 
 async function runbackground(){
-    try {
+    try { 
         for (const year of yearArray) {
             console.log(year)
         
             // get dict of year from find
             const allTombsDict = await findUrlCharts(year, baseurl);
-            console.log(allTombsDict, 'atd')
 
             // get unique locations in dict
+            // get numTombsPerLocation
             const numTombsPerLocation = {};
             const uniqueLocations = getUniqueValues(allTombsDict, 'location');
             for (const uniqueLocation of uniqueLocations) {
@@ -24,8 +25,8 @@ async function runbackground(){
                 numTombsPerLocation[uniqueLocation] = numTombs;
             };  
             
-            // get array of types and num per types
-            // [type: 45, type2: 39, type3: 1 ...]
+            // get array of unique types
+            // get numTombsPerType
             const numTombsPerType = {};
             const uniqueTypes = getUniqueValues(allTombsDict, 'type');
             for (const uniqueType of uniqueTypes) {
@@ -34,29 +35,23 @@ async function runbackground(){
             }
 
             // mk obj per year
-            const resObj = {
+            // add to mongoDB
+            const resObj = await new TombStatsModel ({
                 "year": year,
                 "numTombs": Object.keys(allTombsDict).length,
                 "locationArray": uniqueLocations,
                 "numTombsPerLocation": numTombsPerLocation,
                 "typeArray": uniqueTypes,
                 "numTombsPerType": numTombsPerType
-            };
-            console.log(resObj, 'res obj')
-            /*
-            {
-                "year": "year",
-                "numTombsPerYear": "numTombs",
-                "locationArray": ["locations"],
-                "numTombsPerLocation": {"location": "numtombs"},
-                "typesArray": ["types"],
-                "numTombsPerType": {"type": "numtombs"}
-                "" 
-            }
-            */
+            });
 
-            // add to mongoDB
-
+            resObj.save()
+            .then(() => {
+            console.log('Document saved');
+            })
+            .catch((err) => {
+            console.error('Error saving document:', err);
+            });
         }; 
     } catch (err) {
         console.log(err);

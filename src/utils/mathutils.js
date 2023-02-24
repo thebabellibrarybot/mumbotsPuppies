@@ -72,7 +72,7 @@ const prac = {
       type: 'Ethiopian prayer scroll',
       location: 'Ethiopia',
       date: '1955'
-    }
+    } 
 }
 */
 function getUniqueValues(data, prop) {
@@ -103,11 +103,21 @@ function countEachValue (data, prop, arrayEl) {
         let count = 0;
 
         for (let key in data) {
-          if (data[key].prop === arrayEl) {
-            count++;
-          }
+
+          if (prop === 'location'){
+            if (data[key].location === arrayEl) {
+              count++;
+            };
+          };
+          if (prop === 'type') {
+            if (data[key].type === arrayEl) {
+              count++;
+            };
+          };
+
         }
-        return {prop: count};
+
+        return count;
 
 };
 

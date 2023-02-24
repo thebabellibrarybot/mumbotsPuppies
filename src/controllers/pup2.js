@@ -1,6 +1,10 @@
 const fetchTitleHref = require('../utils/findTitleHres');
 const findImgurl = require('../utils/findImgurl');
 
+
+// ******????******//// actually save for later this baddie mks good url lists
+
+
 // get dict with {titles: href links}
 const getTitleHref = async (req, res) => {
 

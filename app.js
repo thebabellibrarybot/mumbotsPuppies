@@ -3,9 +3,8 @@ const { ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 
 // required routes
-const searchMorganRoute = require('./src/routes/pracRoute');
 const searchTombsRoute = require('./src/routes/searchTombsRoute');
-const updateSearchRoute = require('./src/routes/updateSearchRoute');
+//const updateSearchRoute = require('./src/routes/updateSearchRoute');
 
 // setup-template
 const mongoose = require('mongoose');
@@ -35,13 +34,10 @@ connection.once('open', () => {
 
 
 // routes
-app.use('/searchmorgan', searchMorganRoute);
+app.use('/searchmorgan', searchTombsRoute);
 
 // update routes
-app.use('/updatesearch', updateSearchRoute);
-
-// active routes
-app.use('/search', searchTombsRoute);
+//app.use('/updatesearch', updateSearchRoute);
 
 
 // port and clear run statements;

@@ -17,34 +17,25 @@ const getDateStats = async (req, res) => {
     
 };
 
-// get num tombs by date 
-const getNumTombsByDate = async (req, res) => {
+// get num tombs by value['location' or 'type']
+const getNumTombsByValue = async (req, res) => {
 
     const year = req.headers.year;
+    const value = req.headers.value;
     const query = {
         "year": year
     }
     const foundData = await TombStatsModel.findOne(query)
     if (foundData) {
         console.log(foundData, 'foundData');
-        res.status(200).json(foundData.numTombsPerLocation);
-    }
-
-}
-
-// get num tombs by type
-const getNumTombsByType = async (req, res) => {
-
-    const year = req.headers.year;
-    const query = {
-        "year": year
-    }
-    const foundData = await TombStatsModel.findOne(query)
-    if (foundData) {
-        console.log(foundData, 'foundData');
-        res.status(200).json(foundData.numTombsPerType);
+        if (value === 'location') {
+            res.status(200).json(foundData.numTombsPerLocation)
+        };
+        if (value === 'type') {
+            res.status(200).json(foundData.numTombsPerType)
+        };
     };
 
 };
 
-module.exports = { getDateStats, getNumTombsByDate, getNumTombsByType };
+module.exports = { getDateStats, getNumTombsByValue };

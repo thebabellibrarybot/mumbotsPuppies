@@ -48,29 +48,14 @@ async function findImgurl (url, className, classNameP) {
 
               console.log(url);
               
-              // do find img urls
-              const imgElements = await page.$$(className);
-
-              const srcProperty = await imgElements[0].getProperty('src');
-              const srcValue = await srcProperty.jsonValue();
-              console.log(srcValue, 'src');
-
-              const textElements = await page.$$(classNameP);
-
-              const text = await textElements[0].evaluate(el => el.textContent, textElements[0]);
-              console.log(text, 'text');
-
-              
-              
-
-              // do find img text
-              //const imgTexts = await page.$$(classNameP);
-
-              //const text = await aElement.evaluate(el => el.textContent, imgTexts[0]);
-              //console.log(text, 'text');
+              // get the href text from all <a> elements on the page
+              console.log(url, 'url')
+              const hrefs = await page.evaluate(() => {
+                const links = Array.from(document.querySelectorAll('.panel-footer.text-center a'));
+                return links.map(link => link.href);
+              });
             
-
-            });
+              console.log(hrefs, 'href');
 
             for (const url of urls) {
               await cluster.queue(url);

@@ -72,49 +72,10 @@ async function findUrls (url) {
 async function findPageUrls (baseUrl) {
     try {
         //get urlArray
-        const urlArray =[
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&per_page=10&q=medieval+manuscript&search_field=all_fields',
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=2&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=3&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=4&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=5&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=6&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=7&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=8&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=9&per_page=10&q=medieval+manuscript&search_field=all_fields',   
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=10&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=11&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=12&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=13&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=14&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=15&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=16&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=17&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=18&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=19&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=20&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=21&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=22&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=23&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=24&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=25&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=26&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=27&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=28&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=29&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=30&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=31&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=32&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=33&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=34&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=35&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=36&per_page=10&q=medieval+manuscript&search_field=all_fields',  
-            'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&page=37&per_page=10&q=medieval+manuscript&search_field=all_fields'   
-          ]
+        const urlArray = await findUrls(baseUrl);
         if (urlArray) {
             console.log('got urlArray', urlArray)
         }
-
 
         // initiate cluster and declare return obj
         const resObj = [];
@@ -131,7 +92,6 @@ async function findPageUrls (baseUrl) {
         // cluster task-master
         await cluster.task(async ({ page, data: url }) => {
         await page.goto(url);
-        console.log(url,'cur Url')
         
         // do find by pg.eval and add to response array
         const hrefs = await page.evaluate(() => {
@@ -139,7 +99,6 @@ async function findPageUrls (baseUrl) {
             return links.map(link => link.href);
         });
         resObj.push(hrefs)
-        console.log(hrefs, 'href');
         })
     
         // set-up cluster-que
@@ -156,5 +115,5 @@ async function findPageUrls (baseUrl) {
     }
 }
 
-
-const it = findPageUrls(baseUrl).then(result => console.log(result, 'resIII')).catch(error => console.error(error));
+module.exports = { findUrls, findPageUrls };
+//const it = findPageUrls(baseUrl).then(result => console.log(result, 'resIII')).catch(error => console.error(error));

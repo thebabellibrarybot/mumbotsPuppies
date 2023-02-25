@@ -29,10 +29,24 @@ const getNumTombsByValue = async (req, res) => {
     const foundData = await TombStatsModel.findOne(query)
     if (foundData) {
         if (value === 'location') {
-            res.status(200).json(foundData.numTombsPerLocation)
+            console.log('found location')
+            const output = Object.entries(foundData.numTombsPerLocation).map(([value, num]) => ({
+                value: value.toLowerCase(),
+                num,
+              }));
+              
+            console.log(output, 'output');
+            res.status(200).json(output)
         };
         if (value === 'type') {
-            res.status(200).json(foundData.numTombsPerType)
+            console.log('found type')
+            const output = Object.entries(foundData.numTombsPerType).map(([value, num]) => ({
+                value: value.toLowerCase(),
+                num,
+              }));
+              
+            console.log(output, 'output');
+            res.status(200).json(output)
         };
     };
 

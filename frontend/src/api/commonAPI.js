@@ -11,6 +11,7 @@ export const getNumTombsByValue = async (year, value) => {
   return response.data;
 };
 
+
 // UNAVAILABLE REQ RN
 export const updateData = async (year, value) => {
   const headers = {

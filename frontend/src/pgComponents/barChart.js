@@ -1,30 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { getNumTombsByValue } from '../api/commonAPI';
+const BarChart = (props) => {
 
-const BarChart = () => {
+    const version = props.props;
+    const search = props.search;
 
-    // state
-    const [data, setData] = useState(null);
+    // impiment axios req
 
-
-    // get data on props-clicked
-    function onClickProps(props) {
-        setData(props);
-    }
 
     return (
-        <div>
-            <h1>hello from barchart</h1>
-            <p>check this data for: {data}</p>
-            <div>
-                <button label = 'date' onClick={() => onClickProps('date')}>show date</button>
-                <button label = 'type' onClick={() => onClickProps('type')}>show type</button>
-            </div>
-            <div className={data ? data : 'invisible'}>
-                <p>hidden div</p>
-            </div>
-        </div>
-    );
-};
-
+        <p>barchar {version}, {search}</p>
+    )
+}
 export default BarChart;

@@ -1,11 +1,11 @@
 import React from 'react';
-import BarChart from '../pgComponents/barChart';
+import BarChartOptions from '../pgComponents/barChartOptions';
 
 class Home extends React.Component {
   render() {
     return (
       <div>
-        <BarChart></BarChart>
+        <BarChartOptions></BarChartOptions>
       </div>
     );
   }

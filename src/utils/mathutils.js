@@ -95,7 +95,7 @@ function strToNums (str) {
     const fullnum = match ? parseInt(match[0]) : null;
     const num = Math.round(fullnum / 100) * 100;
     return num
-
+  
 };
 
 function countEachValue (data, prop, arrayEl) {

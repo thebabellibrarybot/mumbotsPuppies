@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router(); 
-const { getDateStats, getNumTombsByDate, getNumTombsByType, getNumTombsByValue } = require('../controllers/searchTombsController');
+const { getDateStats, getArrayByValue, getNumTombsByValue } = require('../controllers/searchTombsController');
 
 // get stats by date
 router.get('/datestats', getDateStats);

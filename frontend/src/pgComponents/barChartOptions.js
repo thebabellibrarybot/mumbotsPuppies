@@ -7,7 +7,7 @@ const BarChartOptions = () => {
     const [type, setType] = useState(null);
     const [location, setLocation] = useState(null)
     const [searchValue, setSearchValue] = useState('nada');
-    const yearArray = [1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100]
+    const yearArray = [ "5th century", "6th century", "7th century", "8th century", "9th century","10th century","11th century","12th century","13th century","14th century","15th century","16th century","17th century","18th century","19th century","20th century"]
 
     // get data on props-clicked
     function onClickProps(props) {
@@ -21,7 +21,6 @@ const BarChartOptions = () => {
         }
     }
     function handleChange (event) {
-        console.log(event.target.value, 'eventtaargetvalue')
         setSearchValue(event.target.value)
     }
 
@@ -34,9 +33,9 @@ const BarChartOptions = () => {
                 <form>
                     <select value = {searchValue} onChange={handleChange}>
                         <option value="">Select an option</option>
-                            {yearArray.map((year) => {
+                            {yearArray.map((year, i) => {
                                 return (
-                                    <option value = {year} onChange={handleChange}>{year}</option>
+                                    <option value = {year} onChange={handleChange} key = {i}>{year}</option>
                                 )
                             })}
                     </select>

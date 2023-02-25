@@ -20,6 +20,7 @@ const getDateStats = async (req, res) => {
 // get num tombs by value['location' or 'type']
 const getNumTombsByValue = async (req, res) => {
 
+    console.log('getNumTombsFired')
     const year = req.headers.year;
     const value = req.headers.value;
     const query = {
@@ -27,7 +28,6 @@ const getNumTombsByValue = async (req, res) => {
     }
     const foundData = await TombStatsModel.findOne(query)
     if (foundData) {
-        console.log(foundData, 'foundData');
         if (value === 'location') {
             res.status(200).json(foundData.numTombsPerLocation)
         };

@@ -1,13 +1,19 @@
 import axios from 'axios';
+import { stringMap } from './stingMap';
 
 // get numTombs from MongoDB set by props
 // returns res.data
 export const getNumTombsByValue = async (year, value) => {
+
+  console.log(year, 'year')
+  const yearValue = stringMap[year]
+  console.log('yearvalue', yearValue)
+
   const headers = {
-    year: year,
+    year: yearValue,
     value: value,
   };
-  const response = await axios.get('http://localhost:4000/searchmorgan/numtombs', { headers });
+  const response = await axios.get('/searchmorgan/numtombs', { headers });
   return response.data;
 };
 

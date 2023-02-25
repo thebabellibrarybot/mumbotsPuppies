@@ -30,7 +30,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverA
 const connection = mongoose.connection;
 connection.once('open', () => {
     console.log('md conn')
-})
+}) 
 
 
 // routes
@@ -39,7 +39,7 @@ app.use('/searchmorgan', searchTombsRoute);
 // update routes
 //app.use('/updatesearch', updateSearchRoute);
 
-
+ 
 // port and clear run statements;
 app.listen(Port, () => {
     console.log(`listening on ${Port}`)

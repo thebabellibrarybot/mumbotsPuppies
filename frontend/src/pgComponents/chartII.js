@@ -2,8 +2,15 @@ import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
 const BarChart = ({ data }) => {
-  const svgRef = useRef();
 
+  // set ref 
+  const svgRef = useRef();
+  // onClickHandler
+  const handleClick = (event, d) => {
+    console.log('Selected Data:', d);
+  };
+
+  // updates with new props from barChart.js
   useEffect(() => {
     // declare svg obj
     const svg = d3.select(svgRef.current);
@@ -35,7 +42,29 @@ const BarChart = ({ data }) => {
       .attr('y', d => yScale(d.num) + margin.top) // shift bars down by top margin
       .attr('width', xScale.bandwidth())
       .attr('height', d => innerHeight - yScale(d.num))
-      .attr('fill', '#3498db');
+      .attr('fill', '#3498db')
+      .on('mouseenter', function() {
+        console.log('hovering')
+        d3.select(this).attr('fill', 'red');
+      })
+      .on('mouseleave', function() {
+        d3.select(this).attr('fill', '#3498db');
+      })
+      .on('mouseover', (event, d) => {
+        // add text element to show the value on hover
+        svg.append('text')
+          .attr('class', 'value-text')
+          .attr('x', xScale(data.indexOf(d)) + xScale.bandwidth() / 2)
+          .attr('y', yScale(d.num) + margin.top - 5)
+          .text(`${d.value}: ${d.num}`)
+          .attr('text-anchor', 'middle');
+      })
+      .on('mouseout', (event, d) => {
+        // select and remove the text element with class 'value-text'
+        svg.select('.value-text').remove();
+      })
+      .on('click', handleClick);
+        
 
     // declare axis's
     const xAxis = d3.axisBottom(xScale)
@@ -63,7 +92,7 @@ const BarChart = ({ data }) => {
 
   return (
     <div>
-      <h1>chart II</h1>
+      <h1>reresentation of asset via cultural institution: Morgan Library</h1>
       <svg ref={svgRef} width="600" height="400"></svg>
     </div>
   );

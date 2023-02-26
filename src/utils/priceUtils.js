@@ -98,7 +98,8 @@ async function findPageUrls (baseUrl) {
             const links = Array.from(document.querySelectorAll('.panel-footer.text-center a'));
             return links.map(link => link.href);
         });
-        resObj.push(hrefs)
+        console.log(hrefs, 'hrefs');
+        resObj.push(hrefs);
         })
     
         // set-up cluster-que
@@ -108,12 +109,21 @@ async function findPageUrls (baseUrl) {
             }            
         await cluster.idle();
         await cluster.close();
-        return resObj;
+        return resObj.flat();
         
     } catch (err) {
-        console.log(err);
+        console.log(err); 
     }
 }
 
+async function getPageDate (urlArray) {
+    // setup cluster
+
+    // id elements w / page.eval$(DOMELEMENT)
+
+    // return info per page as
+    // info = [{"stuff": "stuff"}]
+}
+
 module.exports = { findUrls, findPageUrls };
-//const it = findPageUrls(baseUrl).then(result => console.log(result, 'resIII')).catch(error => console.error(error));
+const it = findPageUrls(baseUrl).then(result => console.log(result, 'resIII')).catch(error => console.error(error));

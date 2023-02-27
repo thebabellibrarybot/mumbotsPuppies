@@ -75,11 +75,15 @@ const prac = {
     } 
 }
 */
+
+// takes obj and prop
+// returns unique values of data.prop
 function getUniqueValues(data, prop) {
 
     let uniqueValues = [];
   
     for (let key in data) {
+      console.log(key, 'from getUniqueValues')
       const value = data[key][prop];
       if (value && !uniqueValues.includes(value)) {
         uniqueValues.push(value);
@@ -89,15 +93,56 @@ function getUniqueValues(data, prop) {
     return uniqueValues;
   }
 
+// takes obj, object value, and prop
+// returns all object that have prop in their object value
+function filterObjs(data, value, prop) {
+  let sameValue = [];
+
+  for (let key in data) {
+    const aValue = data[key][value];
+
+    if (aValue === prop) {
+      sameValue.push(data[key])
+    }
+  }
+  return sameValue;
+}
+
+// takes a str with numbers in it
+// reutrn largest number in the string
 function strToNums (str) {
 
-    const match = str.match(/\d+/);
-    const fullnum = match ? parseInt(match[0]) : null;
-    const num = Math.round(fullnum / 100) * 100;
-    return num
-  
-};
+  const regex = /\d+/g;
+  const matches = str.match(regex);
+  if (matches) {
+    const numbers = matches.map(Number).filter(num => Number.isInteger(num));
+    if (numbers.length > 0) {
+      const num = Math.max(...numbers);
+      return Math.round(num/100) * 100;
+    }
+  }
+  return null;
+}
 
+// takes a str with nums in it
+// returns the year if year is found
+function strToYear (str) {
+
+  const regex = /\d+/g;
+  const matches = str.match(regex);
+  if (matches) {
+    const numbers = matches.map(Number).filter(num => Number.isInteger(num));
+    if (numbers.length > 0) {
+      const num = Math.max(...numbers);
+      return num;
+    }
+  }
+  return null;
+}
+
+// similar to getUnique values
+// takes an obj from array of objs
+// returns num of each occorance 
 function countEachValue (data, prop, arrayEl) {
 
         let count = 0;
@@ -114,12 +159,15 @@ function countEachValue (data, prop, arrayEl) {
               count++;
             };
           };
+          if (prop === 'date') {
+            if (data[key].type === arrayEl) {
+              count++;
+            };
+          }
 
         }
 
         return count;
-
 };
 
-
-module.exports = { strToNums, getUniqueValues, countEachValue };
+module.exports = { strToNums, getUniqueValues, countEachValue, strToYear, filterObjs };

@@ -1,14 +1,15 @@
 const puppeteer = require("puppeteer");
 const { Cluster } = require('puppeteer-cluster');
-
+const { strToNums, getValueByParam, strToYear } = require("./mathutils");
 
 const baseUrl = 'https://sdbm.library.upenn.edu/?f%5Bsale_seller%5D%5B%5D=Phillipps%2C+Thomas%2C+Sir%2C+1792-1872&per_page=10&q=medieval+manuscript&search_field=all_fields'
+
 
 // get all tabel-body links
 // takes date and base url parameters (str, str)
 // reutrns an array of all urls for each date
-async function findUrls (url) {
-
+async function clickThruChart (url) {
+ 
     try {
         // return obj
         const urlArray = [];
@@ -69,13 +70,11 @@ async function findUrls (url) {
 };
 
 // get all tomb links from each page
-async function findPageUrls (baseUrl) {
+async function findChartUrls (urlArray) {
+
     try {
         //get urlArray
         const urlArray = await findUrls(baseUrl);
-        if (urlArray) {
-            console.log('got urlArray', urlArray)
-        }
 
         // initiate cluster and declare return obj
         const resObj = [];
@@ -98,7 +97,6 @@ async function findPageUrls (baseUrl) {
             const links = Array.from(document.querySelectorAll('.panel-footer.text-center a'));
             return links.map(link => link.href);
         });
-        console.log(hrefs, 'hrefs');
         resObj.push(hrefs);
         })
     
@@ -114,16 +112,94 @@ async function findPageUrls (baseUrl) {
     } catch (err) {
         console.log(err); 
     }
-}
+};
 
-async function getPageDate (urlArray) {
+// takes an array of urls
+// returns a obj with year key and detail values i.e. {"price": 100, "date": 1400}
+async function getPageData (urlArray) {
     // setup cluster
+    try {
+        const resObj = [];
+        // initiate cluster and declare return obj
+        const cluster = await Cluster.launch({
+            concurrency: Cluster.CONCURRENCY_CONTEXT,
+            maxConcurrency: 2,
+            puppeteerOptions: {
+              headless: false,
+              defaultViewport: false,
+              userDataDir: "./tmp"
+          }
+        });
 
-    // id elements w / page.eval$(DOMELEMENT)
+        // cluster task-master
+        await cluster.task(async ({ page, data: url }) => {
+            await page.goto(url);
+            
+            // do find by pg.eval and add to response array
+            const tdTexts = await page.$$eval('tr', trs => {
+                return trs.map(tr => {
+                  const tds = Array.from(tr.querySelectorAll('td'));
+                  return tds.map(td => td.textContent.trim());
+                });
+              });
 
-    // return info per page as
-    // info = [{"stuff": "stuff"}]
-}
+            const resItems = [];
+            for (const tdText of tdTexts) {
+                // date
+                if (tdText[0] === 'Manuscript Dates') {
+                    const date = {"date": strToNums(tdText[1])}
+                    resItems.push(date)
+                };
+                // price
+                if (tdText[0] === 'Price') {
+                    const price = {"price": strToNums(tdText[1])}
+                    resItems.push(price)
+                };
+                // location
+                if (tdText[0] === 'Places') {
+                    const place = {"location": tdText[1]}
+                    resItems.push(place)
+                };
+                // type
+                if (tdText[0] === 'Titles') {
+                    const type = {"type": tdText[1].trim()};
+                    resItems.push(type)
+                }
+                // sale date
+                if (tdText[0] === 'Date Sold') {
+                    const dateSold = {"sold": strToYear(tdText[1])};
+                    resItems.push(dateSold);
+                }
+                // title 
+                if (tdText[0] === 'Created') {
+                    const title = {"title": tdText[1].trim()};
+                    resItems.push(title);
+                }
+            };
+            const obj = {"date": getValueByParam(resItems, 'date'),
+                "price": getValueByParam(resItems, 'price'),
+                "location": getValueByParam(resItems, 'location'),
+                "type": getValueByParam(resItems, 'type'),
+                "sold": getValueByParam(resItems, 'sold'),
+                "title": getValueByParam(resItems, 'title')
+                }
+            //resObj[]
+            resObj.push(obj)
+        });
+        // set-up cluster-que
+        // load array of urls
+        for (const url of urlArray) {
+            await cluster.queue(url);
+            }            
+        await cluster.idle();
+        await cluster.close();
+        console.log(Object.keys(resObj).length, 'resObj Len')
+        console.log(resObj, 'resObj')
+        return resObj;
+        
+    } catch (err) {
+        console.log(err); 
+    }
+};
 
-module.exports = { findUrls, findPageUrls };
-const it = findPageUrls(baseUrl).then(result => console.log(result, 'resIII')).catch(error => console.error(error));
+module.exports = { clickThruChart, findChartUrls, getPageData };

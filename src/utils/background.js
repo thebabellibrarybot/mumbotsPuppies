@@ -20,7 +20,7 @@ connection.once('open', () => {
 })
 
 async function runbackground(){
-    try { 
+    try {  
         for (const year of yearArray) {
             console.log(year)
         

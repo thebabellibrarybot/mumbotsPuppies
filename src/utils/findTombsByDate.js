@@ -92,7 +92,7 @@ async function findUrlCharts (date, url) {
                 const i = strToNums(rowData[3]);
                 resObj[rowData[0].trim()] = {"type": rowData[1].trim(), "location": rowData[2].trim(), "date": i}                
             };
-        });
+        }); 
         
         // load array of urls
         for (const url of urlArray) {

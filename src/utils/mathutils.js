@@ -83,7 +83,7 @@ function getUniqueValues(data, prop) {
     let uniqueValues = [];
   
     for (let key in data) {
-      console.log(key, 'from getUniqueValues')
+      console.log(key)
       const value = data[key][prop];
       if (value && !uniqueValues.includes(value)) {
         uniqueValues.push(value);
@@ -92,6 +92,11 @@ function getUniqueValues(data, prop) {
   
     return uniqueValues;
   }
+// new fn
+function getUniqueValuesII (data, prop) {
+  const values = data[prop];
+  return values;
+}
 
 // takes obj, object value, and prop
 // returns all object that have prop in their object value
@@ -145,7 +150,7 @@ function strToYear (str) {
 // returns num of each occorance 
 function countEachValue (data, prop, arrayEl) {
 
-        let count = 0;
+        let count = 1;
 
         for (let key in data) {
 
@@ -170,4 +175,4 @@ function countEachValue (data, prop, arrayEl) {
         return count;
 };
 
-module.exports = { strToNums, getUniqueValues, countEachValue, strToYear, filterObjs };
+module.exports = { strToNums, getUniqueValues, getUniqueValuesII,countEachValue, strToYear, filterObjs };
